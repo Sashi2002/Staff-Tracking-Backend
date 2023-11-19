@@ -1,0 +1,50 @@
+<!-- views/employee.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Employee Details</title>
+  </head>
+
+  <body>
+    <h1>Employee Details</h1>
+    <p>ID: <%= employee.ID %></p>
+
+    <% if (employee.name) { %>
+    <p>Name: <%= employee.name %></p>
+    <% } %> <% if (employee.department) { %>
+    <p>Department: <%= employee.department %></p>
+    <% } %> <% if (employee.position) { %>
+    <p>Position: <%= employee.position %></p>
+    <% } %>
+
+    <h2>Swipe Details</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Swipe ID</th>
+          <th>Var Month</th>
+          <th>Plant</th>
+          <th>Var Date</th>
+          <th>Var Time</th>
+          <th>Var Type</th>
+          <th>Machine Code</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% employee.swipeDetails.forEach(function(swipe) { %>
+        <tr>
+          <td><%= swipe.SWIPEID %></td>
+          <td><%= swipe.VARMONTH %></td>
+          <td><%= swipe.PLANT %></td>
+          <td><%= swipe.VARDATE %></td>
+          <td><%= swipe.VARTIME %></td>
+          <td><%= swipe.VARTYPE %></td>
+          <td><%= swipe.MACHINE_CODE %></td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </body>
+</html>
