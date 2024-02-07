@@ -25,7 +25,22 @@ app.get("/views/employee", (req, res) => {
 
 app.post("/api/employee", async (req, res) => {
   try {
-    const employees = req.body;
+    let employees = req.body;
+
+    // If the request body is a single object, convert it to an array
+    if (!Array.isArray(employees)) {
+      employees = [employees];
+    }
+
+    // Check if employees is not an empty array
+    if (employees.length === 0) {
+      return res
+        .status(400)
+        .json({
+          message:
+            "Invalid request body. Expecting at least one employee object.",
+        });
+    }
 
     // Assuming employees is an array of objects with properties ID, NAME, and PLANT
     const values = employees
@@ -291,26 +306,8 @@ app.get("/api/employee/attendance/:ID", async (req, res) => {
         .json({ message: "Swipe data for the employee not found" });
     }
 
-    // Create a table name for attendance
-    const monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-
-    const formattedDate = `${
-      monthNames[currentDate.getMonth()]
-    } ${currentDate.getDate()} ${currentYear}`;
-    const attendanceTableName = `attendance_${formattedDate}`;
+    // Use a fixed table name for attendance
+    const attendanceTableName = "attendance";
 
     // Check if the attendance table already exists
     const attendanceTableExistsQuery = `SHOW TABLES LIKE '${attendanceTableName}'`;
